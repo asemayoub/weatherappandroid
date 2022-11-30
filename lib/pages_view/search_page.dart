@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Weather_Services/weather_services.dart';
+
 class SearchWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,8 @@ class SearchWeather extends StatelessWidget {
             child: TextField(
               onSubmitted: (value) {
                 CityName = value;
-                print(CityName);
+                weatherServive service = weatherServive();
+                service.getWeather(cityName: CityName!);
               },
               decoration: InputDecoration(
                 contentPadding:
