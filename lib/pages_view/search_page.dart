@@ -3,7 +3,12 @@ import 'package:weatherappandroid/models/weather_models.dart';
 
 import '../Weather_Services/weather_services.dart';
 
+
 class SearchWeather extends StatelessWidget {
+
+  SearchWeather({this.updateUi});
+  VoidCallback? updateUi;
+
   @override
   Widget build(BuildContext context) {
     String? CityName;
@@ -24,7 +29,14 @@ class SearchWeather extends StatelessWidget {
                 weatherModel weather =
                     await service.getWeather(cityName: CityName!);
 
-                print(weather);
+                weatherdata = weather;
+                updateUi!();
+
+                Navigator.pop(context);
+
+
+
+
               },
               decoration: InputDecoration(
                 contentPadding:
@@ -46,3 +58,7 @@ class SearchWeather extends StatelessWidget {
     );
   }
 }
+
+weatherModel? weatherdata;
+
+
