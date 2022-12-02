@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:weatherappandroid/models/weather_models.dart';
 import 'package:weatherappandroid/pages_view/search_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    weatherModel? weatherdata;
     return Scaffold(
       appBar: AppBar(
         title: Text('Weather App'),
@@ -27,7 +29,8 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: Center(
+
+      body: weatherdata != null ? Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -41,7 +44,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ) : Container()
     );
   }
 }
