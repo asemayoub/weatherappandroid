@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weatherappandroid/Providers/weather_provider.dart';
 import 'package:weatherappandroid/models/weather_models.dart';
 
 import '../Weather_Services/weather_services.dart';
 
-
 class SearchWeather extends StatelessWidget {
 
-  SearchWeather({this.updateUi});
-  VoidCallback? updateUi;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +28,10 @@ class SearchWeather extends StatelessWidget {
                 weatherModel weather =
                     await service.getWeather(cityName: CityName!);
 
-                weatherdata = weather;
-                updateUi!();
+
+                Provider.of<weatherProvider>(context,listen: false).weatherdata = weather;
 
                 Navigator.pop(context);
-
-
-
-
               },
               decoration: InputDecoration(
                 contentPadding:
@@ -58,7 +53,4 @@ class SearchWeather extends StatelessWidget {
     );
   }
 }
-
-weatherModel? weatherdata;
-
 

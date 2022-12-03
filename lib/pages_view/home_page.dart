@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weatherappandroid/Providers/weather_provider.dart';
 import 'package:weatherappandroid/Share/Components/Components.dart';
 import 'package:weatherappandroid/models/weather_models.dart';
 import 'package:weatherappandroid/pages_view/search_page.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,14 +13,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  void updateUi(){
-    setState(() {
-
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+
+   var weatherdata =  Provider.of<weatherProvider>(context).weatherdata;
 
     return Scaffold(
         appBar: AppBar(
@@ -29,8 +29,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return SearchWeather(updateUi:updateUi ,
-                      );
+                      return SearchWeather();
                     }));
                   },
                   icon: Icon(Icons.search)),
@@ -63,13 +62,13 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: [
                           defaultWathertext(
-                            text: 'Cairo',
+                            text: weatherdata.city ?? 'UnDefined',
                             fontsize: 30,
                             color: Colors.black,
                             fontweight: FontWeight.w600,
                           ),
                           defaultWathertext(
-                              text: 'Updated : 12:11 pm',
+                              text: weatherdata.date,
                               fontsize: 16,
                               color: Colors.grey),
                         ],
@@ -80,16 +79,16 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
 
-                        defaultWeatherIcon(weatherIcon: 'assets/weather_icon/cloudy.png'),
+                        defaultWeatherIcon(weatherIcon: '${weatherdata.getimage()}'),
 
                         SizedBox(width: 40,),
-                        defaultWathertext(text: '40', fontsize: 40, color: Colors.black),
+                        defaultWathertext(text: '${weatherdata.temp.toInt()}', fontsize: 40, color: Colors.black),
                         SizedBox(width: 40,),
                         Column(
                           children: [
-                          defaultWathertext(text: 'Max : 32', fontsize: 14, color: Colors.black),
+                          defaultWathertext(text: 'Max : ${weatherdata.minTemp.toInt()}', fontsize: 14, color: Colors.black),
                           SizedBox(height: 5,),
-                          defaultWathertext(text: 'Min : 19', fontsize: 14, color: Colors.black),
+                          defaultWathertext(text: 'Min : ${weatherdata.maxTemp.toInt()}', fontsize: 14, color: Colors.black),
 
                           ],
                         ),
@@ -101,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: 30,),
-                    defaultWathertext(text: 'Rain', fontsize: 40, color: Colors.black,fontweight: FontWeight.w700,)
+                    defaultWathertext(text: weatherdata!.weatherstateName ?? '   ', fontsize: 40, color: Colors.black,fontweight: FontWeight.w700,)
                   ],
                 ),
               ));
